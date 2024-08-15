@@ -9,4 +9,5 @@ public class CreatePaymentDto {
     private LocalDate paymentDate;
     private LocalDate  lastPaymentDate;
     private String owed;
+    private int departmentId;
 }

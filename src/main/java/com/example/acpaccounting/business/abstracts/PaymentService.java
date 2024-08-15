@@ -11,4 +11,7 @@ public interface PaymentService {
     Result update(UpdatePaymentDto updatePaymentDto);
     Result delete(int id);
     DataResult<Payment> get(int id);
+    String getDepartmentName(int paymentId);
+    int getDepartmentId(int paymentId);
+
 }

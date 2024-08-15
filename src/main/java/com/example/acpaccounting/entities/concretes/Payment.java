@@ -27,5 +27,8 @@ public class Payment {
     @Column(nullable = false)
     private String owed;
 
+    @Column(name="departman_Id",nullable = false)
+    private int departmentId;
+
 
 }

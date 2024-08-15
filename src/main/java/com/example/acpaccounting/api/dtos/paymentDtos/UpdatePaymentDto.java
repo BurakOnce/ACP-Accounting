@@ -11,4 +11,6 @@ public class UpdatePaymentDto {
     private LocalDate paymentDate;
     private LocalDate  lastPaymentDate;
     private String owed;
+    private int departmentId;
+
 }

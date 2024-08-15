@@ -34,4 +34,10 @@ public class PaymentsController {
 
     @GetMapping("/get/{id}")
     public DataResult<Payment> get(int id){return paymentService.get(id);}
+
+    @GetMapping("/getDepartmentName/{id}")
+    public String getDepartmentName(int paymentId){return paymentService.getDepartmentName(paymentId);}
+
+    @GetMapping("/getDepartmentId/{id}")
+    public int getDepartmentId(int paymentId){return paymentService.getDepartmentId(paymentId);}
 }
