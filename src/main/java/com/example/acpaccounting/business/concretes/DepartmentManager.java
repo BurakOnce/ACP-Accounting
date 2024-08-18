@@ -34,7 +34,7 @@ public class DepartmentManager implements DepartmentService {
 
             department.setName(createDepartmentDto.getName());
             department.setBudget(createDepartmentDto.getBudget());
-            department.setEmployeesNumber(createDepartmentDto.getEmployeesNumber());
+            department.setEmployeeNumber(createDepartmentDto.getEmployeesNumber());
             department.setStatus(createDepartmentDto.isStatus());
 
             departmentRepository.save(department);
@@ -52,7 +52,7 @@ public class DepartmentManager implements DepartmentService {
                 Department department=optionalDepartment.get();
                 department.setName(updateDepartmentDto.getName());
                 department.setBudget(updateDepartmentDto.getBudget());
-                department.setEmployeesNumber(updateDepartmentDto.getEmployeesNumber());
+                department.setEmployeeNumber(updateDepartmentDto.getEmployeesNumber());
                 department.setStatus(updateDepartmentDto.isStatus());
 
                 departmentRepository.save(department);

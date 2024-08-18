@@ -5,8 +5,10 @@ import com.example.acpaccounting.api.dtos.paymentDtos.UpdatePaymentDto;
 import com.example.acpaccounting.business.abstracts.PaymentService;
 import com.example.acpaccounting.core.utilities.results.*;
 import com.example.acpaccounting.dataAccess.abstracts.DepartmentRepository;
+import com.example.acpaccounting.dataAccess.abstracts.InvoiceRepository;
 import com.example.acpaccounting.dataAccess.abstracts.PaymentRepository;
 import com.example.acpaccounting.entities.concretes.Department;
+import com.example.acpaccounting.entities.concretes.Invoice;
 import com.example.acpaccounting.entities.concretes.Payment;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +19,11 @@ public class PaymentManager implements PaymentService {
 
     private final PaymentRepository paymentRepository;
     private final DepartmentRepository departmentRepository;
-    public PaymentManager(PaymentRepository paymentRepository, DepartmentRepository departmentRepository) {
+    private final InvoiceRepository invoiceRepository;
+    public PaymentManager(PaymentRepository paymentRepository, DepartmentRepository departmentRepository, InvoiceRepository invoiceRepository) {
         this.paymentRepository = paymentRepository;
         this.departmentRepository = departmentRepository;
+        this.invoiceRepository = invoiceRepository;
     }
 
     @Override
@@ -33,8 +37,8 @@ public class PaymentManager implements PaymentService {
 
     @Override
     public DataResult<Payment> add(CreatePaymentDto createPaymentDto) {
-        try{
-            Payment payment= new Payment();
+        try {
+            Payment payment = new Payment();
 
             payment.setAmount(createPaymentDto.getAmount());
             payment.setDescription(createPaymentDto.getDescription());
@@ -42,34 +46,54 @@ public class PaymentManager implements PaymentService {
             payment.setLastPaymentDate(createPaymentDto.getLastPaymentDate());
             payment.setOwed(createPaymentDto.getOwed());
             payment.setDepartmentId(createPaymentDto.getDepartmentId());
-            paymentRepository.save(payment);
-            return new SuccessDataResult("Request for create new Payment",payment);
-        }catch (Exception exception){
-            return new FailDataResult("There was an error creating the Payment",createPaymentDto);
-        }
 
+            if (createPaymentDto.getInvoiceId() != null) {
+                Optional<Invoice> invoice = invoiceRepository.findById(createPaymentDto.getInvoiceId());
+                if (invoice.isPresent()) {
+                    payment.setInvoice(invoice.get());
+                }
+            }
+
+            paymentRepository.save(payment);
+            return new SuccessDataResult("Request for create new Payment", payment);
+        } catch (Exception exception) {
+            return new FailDataResult("There was an error creating the Payment", createPaymentDto);
+        }
     }
+
 
     @Override
     public Result update(UpdatePaymentDto updatePaymentDto) {
-        try{
+        try {
             Optional<Payment> optionalPayment = paymentRepository.findById(updatePaymentDto.getId());
-            if(optionalPayment.isPresent()){
-                Payment payment=optionalPayment.get();
+            if (optionalPayment.isPresent()) {
+                Payment payment = optionalPayment.get();
+
                 payment.setAmount(updatePaymentDto.getAmount());
                 payment.setDescription(updatePaymentDto.getDescription());
                 payment.setPaymentDate(updatePaymentDto.getPaymentDate());
                 payment.setLastPaymentDate(updatePaymentDto.getLastPaymentDate());
                 payment.setOwed(updatePaymentDto.getOwed());
                 payment.setDepartmentId(updatePaymentDto.getDepartmentId());
+
+                if (updatePaymentDto.getInvoiceId() != null) {
+                    Optional<Invoice> invoice = invoiceRepository.findById(updatePaymentDto.getInvoiceId());
+                    if (invoice.isPresent()) {
+                        payment.setInvoice(invoice.get());
+                    }
+                } else {
+                    payment.setInvoice(null);
+                }
+
                 paymentRepository.save(payment);
-                return new SuccessDataResult("Request for update Payment",payment);
+                return new SuccessDataResult("Request for update Payment", payment);
             }
-        }catch (Exception exception){
-            return new FailDataResult("There was an error updating the Payment",updatePaymentDto);
+        } catch (Exception exception) {
+            return new FailDataResult("There was an error updating the Payment", updatePaymentDto);
         }
         return new FailResult("Unexpected fail");
     }
+
 
     @Override
     public Result delete(int id) {
