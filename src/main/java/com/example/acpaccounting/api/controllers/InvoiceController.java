@@ -1,7 +1,7 @@
 package com.example.acpaccounting.api.controllers;
 
-import com.example.acpaccounting.api.dtos.invoiceDtos.CreateInvoiceDto;
-import com.example.acpaccounting.api.dtos.invoiceDtos.UpdateInvoiceDto;
+import com.example.acpaccounting.entities.abstracts.dtos.invoiceDtos.CreateInvoiceDto;
+import com.example.acpaccounting.entities.abstracts.dtos.invoiceDtos.UpdateInvoiceDto;
 import com.example.acpaccounting.business.abstracts.InvoiceService;
 import com.example.acpaccounting.core.utilities.results.DataResult;
 import com.example.acpaccounting.core.utilities.results.Result;
@@ -33,11 +33,6 @@ public class InvoiceController {
         return ResponseEntity.ok(invoiceService.add(createInvoiceDto));
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Result> update(@RequestBody UpdateInvoiceDto updateInvoiceDto) {
-        return ResponseEntity.ok(invoiceService.update(updateInvoiceDto));
-    }
-
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Result> delete(@PathVariable int id) {
         return ResponseEntity.ok(invoiceService.delete(id));
@@ -46,11 +41,6 @@ public class InvoiceController {
     @GetMapping("/get/{id}")
     public ResponseEntity<DataResult<Invoice>> get(@PathVariable int id) {
         return ResponseEntity.ok(invoiceService.get(id));
-    }
-
-    @GetMapping("/getByPaymentId/{paymentId}")
-    public ResponseEntity<DataResult<Invoice>> getByPaymentId(@PathVariable int paymentId) {
-        return ResponseEntity.ok(invoiceService.getByPaymentId(paymentId));
     }
 
     @GetMapping("/getDepartmentName/{invoiceId}")

@@ -1,12 +1,11 @@
 package com.example.acpaccounting.business.concretes;
 
-import com.example.acpaccounting.api.dtos.departmentDtos.CreateDepartmentDto;
-import com.example.acpaccounting.api.dtos.departmentDtos.UpdateDepartmentDto;
+import com.example.acpaccounting.entities.abstracts.dtos.departmentDtos.CreateDepartmentDto;
+import com.example.acpaccounting.entities.abstracts.dtos.departmentDtos.UpdateDepartmentDto;
 import com.example.acpaccounting.business.abstracts.DepartmentService;
 import com.example.acpaccounting.core.utilities.results.*;
 import com.example.acpaccounting.dataAccess.abstracts.DepartmentRepository;
 import com.example.acpaccounting.entities.concretes.Department;
-import com.example.acpaccounting.entities.concretes.Payment;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

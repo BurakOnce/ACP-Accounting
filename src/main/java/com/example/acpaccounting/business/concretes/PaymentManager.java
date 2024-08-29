@@ -1,14 +1,12 @@
 package com.example.acpaccounting.business.concretes;
 
-import com.example.acpaccounting.api.dtos.paymentDtos.CreatePaymentDto;
-import com.example.acpaccounting.api.dtos.paymentDtos.UpdatePaymentDto;
+import com.example.acpaccounting.entities.abstracts.dtos.paymentDtos.CreatePaymentDto;
+import com.example.acpaccounting.entities.abstracts.dtos.paymentDtos.UpdatePaymentDto;
 import com.example.acpaccounting.business.abstracts.PaymentService;
 import com.example.acpaccounting.core.utilities.results.*;
 import com.example.acpaccounting.dataAccess.abstracts.DepartmentRepository;
-import com.example.acpaccounting.dataAccess.abstracts.InvoiceRepository;
 import com.example.acpaccounting.dataAccess.abstracts.PaymentRepository;
 import com.example.acpaccounting.entities.concretes.Department;
-import com.example.acpaccounting.entities.concretes.Invoice;
 import com.example.acpaccounting.entities.concretes.Payment;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +17,9 @@ public class PaymentManager implements PaymentService {
 
     private final PaymentRepository paymentRepository;
     private final DepartmentRepository departmentRepository;
-    private final InvoiceRepository invoiceRepository;
-    public PaymentManager(PaymentRepository paymentRepository, DepartmentRepository departmentRepository, InvoiceRepository invoiceRepository) {
+    public PaymentManager(PaymentRepository paymentRepository, DepartmentRepository departmentRepository) {
         this.paymentRepository = paymentRepository;
         this.departmentRepository = departmentRepository;
-        this.invoiceRepository = invoiceRepository;
     }
 
     @Override
@@ -46,14 +42,6 @@ public class PaymentManager implements PaymentService {
             payment.setLastPaymentDate(createPaymentDto.getLastPaymentDate());
             payment.setOwed(createPaymentDto.getOwed());
             payment.setDepartmentId(createPaymentDto.getDepartmentId());
-
-            if (createPaymentDto.getInvoiceId() != null) {
-                Optional<Invoice> invoice = invoiceRepository.findById(createPaymentDto.getInvoiceId());
-                if (invoice.isPresent()) {
-                    payment.setInvoice(invoice.get());
-                }
-            }
-
             paymentRepository.save(payment);
             return new SuccessDataResult("Request for create new Payment", payment);
         } catch (Exception exception) {
@@ -75,15 +63,6 @@ public class PaymentManager implements PaymentService {
                 payment.setLastPaymentDate(updatePaymentDto.getLastPaymentDate());
                 payment.setOwed(updatePaymentDto.getOwed());
                 payment.setDepartmentId(updatePaymentDto.getDepartmentId());
-
-                if (updatePaymentDto.getInvoiceId() != null) {
-                    Optional<Invoice> invoice = invoiceRepository.findById(updatePaymentDto.getInvoiceId());
-                    if (invoice.isPresent()) {
-                        payment.setInvoice(invoice.get());
-                    }
-                } else {
-                    payment.setInvoice(null);
-                }
 
                 paymentRepository.save(payment);
                 return new SuccessDataResult("Request for update Payment", payment);

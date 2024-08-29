@@ -32,8 +32,6 @@ public class Payment {
     @Column(name="departman_id",nullable = false)
     private int departmentId;
 
-    @OneToOne(mappedBy = "payment", cascade = CascadeType.ALL, optional = true)
-    private Invoice invoice;
 
 
 }

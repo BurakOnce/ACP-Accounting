@@ -1,9 +1,11 @@
-package com.example.acpaccounting.api.dtos.paymentDtos;
-import lombok.Data;
-import java.time.LocalDate;
+package com.example.acpaccounting.entities.abstracts.dtos.paymentDtos;
 
+import lombok.Data;
+
+import java.time.LocalDate;
 @Data
-public class CreatePaymentDto {
+public class UpdatePaymentDto {
+    private int id;
     private double amount;
     private String description;
     private LocalDate paymentDate;

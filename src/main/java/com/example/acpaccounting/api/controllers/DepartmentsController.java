@@ -1,7 +1,7 @@
 package com.example.acpaccounting.api.controllers;
 
-import com.example.acpaccounting.api.dtos.departmentDtos.CreateDepartmentDto;
-import com.example.acpaccounting.api.dtos.departmentDtos.UpdateDepartmentDto;
+import com.example.acpaccounting.entities.abstracts.dtos.departmentDtos.CreateDepartmentDto;
+import com.example.acpaccounting.entities.abstracts.dtos.departmentDtos.UpdateDepartmentDto;
 import com.example.acpaccounting.business.abstracts.DepartmentService;
 import com.example.acpaccounting.core.utilities.results.DataResult;
 import com.example.acpaccounting.core.utilities.results.Result;

@@ -32,16 +32,18 @@ public class Invoice {
     @Column(name = "total_amount", nullable = false)
     private Double totalAmount;
 
+    @Column(name = "invoice_owner_email", nullable = false)
+    private String invoiceOwnerEmail;
+
+    @Column(name = "invoice_received_email", nullable = false)
+    private String invoiceReceivedEmail;
+
     @Column(name = "invoice_status", nullable = false)
     private InvoiceStatus invoiceStatus;
 
     @Column(name="departman_id",nullable = false)
     private int departmentId;
 
-    @OneToOne
-    @JoinColumn(name = "payment_id", nullable = false)
-    @JsonIgnore
-    private Payment payment;
 
 
 }

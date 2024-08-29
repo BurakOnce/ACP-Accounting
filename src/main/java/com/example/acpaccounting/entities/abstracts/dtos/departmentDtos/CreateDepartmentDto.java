@@ -1,4 +1,4 @@
-package com.example.acpaccounting.api.dtos.departmentDtos;
+package com.example.acpaccounting.entities.abstracts.dtos.departmentDtos;
 
 import jakarta.persistence.Column;
 import lombok.Data;
